@@ -2,7 +2,7 @@ import moment from "moment";
 
 const DayInfo = () => {
     return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col items-center lg:items-start gap-1">
             <div className="flex items-center gap-2">
                 <p className="text-5xl font-semibold">
                     {moment().format("DD")}
