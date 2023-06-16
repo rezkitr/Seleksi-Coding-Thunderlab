@@ -56,24 +56,24 @@ const TaskCard = ({ task }) => {
                     </p>
                 )}
             </div>
-            {!isFinished && (
-                <div className="flex items-center gap-2 text-lg ml-4">
-                    {isEditing ? (
-                        <button onClick={onSave}>
-                            <AiOutlineSave className="text-blue-800" />
-                        </button>
-                    ) : (
-                        <React.Fragment>
+            <div className="flex items-center gap-2 text-lg ml-4">
+                {isEditing ? (
+                    <button onClick={onSave}>
+                        <AiOutlineSave className="text-blue-800" />
+                    </button>
+                ) : (
+                    <React.Fragment>
+                        {!isFinished && (
                             <button onClick={onEdit}>
                                 <AiOutlineEdit className="text-blue-800" />
                             </button>
-                            <button onClick={() => deleteTask(task.id)}>
-                                <MdDeleteOutline className="text-red-900" />
-                            </button>
-                        </React.Fragment>
-                    )}
-                </div>
-            )}
+                        )}
+                        <button onClick={() => deleteTask(task.id)}>
+                            <MdDeleteOutline className="text-red-900" />
+                        </button>
+                    </React.Fragment>
+                )}
+            </div>
         </div>
     );
 };
