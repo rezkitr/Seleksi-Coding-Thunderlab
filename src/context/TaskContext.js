@@ -5,8 +5,9 @@ export const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
     const [addTaskInput, setAddTaskInput] = useState("");
-    const [editedTask, setEditedTask] = useState(null);
     const [tasks, setTasks] = useState([]);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         const todoTasks = localStorage.getItem("todoListApp");
@@ -28,26 +29,23 @@ const TaskProvider = ({ children }) => {
         setAddTaskInput("");
     };
 
-    const deleteTask = (id) => {
-        const updatedTasks = tasks.filter((task) => task.id !== id);
+    const deleteTask = () => {
+        const updatedTasks = tasks.filter(
+            (task) => task.id !== selectedTask.id
+        );
         setTasks(updatedTasks);
     };
 
-    const editTask = (id) => {
-        const task = tasks.find((task) => task.id === id);
-        setEditedTask(task);
-    };
-
     const onEditNameChange = (value) => {
-        setEditedTask((prev) => ({ ...prev, name: value }));
+        setSelectedTask((prev) => ({ ...prev, name: value }));
     };
 
     const saveEditTask = () => {
         const updatedTasks = tasks.map((task) =>
-            task.id === editedTask.id ? editedTask : task
+            task.id === selectedTask.id ? selectedTask : task
         );
         setTasks(updatedTasks);
-        setEditedTask(null);
+        setSelectedTask(null);
     };
 
     const finishTask = (id) => {
@@ -61,15 +59,17 @@ const TaskProvider = ({ children }) => {
         <TaskContext.Provider
             value={{
                 tasks,
-                editedTask,
                 addTaskInput,
                 setAddTaskInput,
                 addTask,
                 deleteTask,
                 finishTask,
-                editTask,
                 onEditNameChange,
                 saveEditTask,
+                showDeleteModal,
+                setShowDeleteModal,
+                selectedTask,
+                setSelectedTask,
             }}
         >
             {children}

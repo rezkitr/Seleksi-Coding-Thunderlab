@@ -1,4 +1,4 @@
-import { Container, Header, TaskList } from "./components";
+import { Container, DeleteConfirmModal, Header, TaskList } from "./components";
 
 const App = () => {
     return (
@@ -6,6 +6,7 @@ const App = () => {
             <Container>
                 <Header />
                 <TaskList />
+                <DeleteConfirmModal />
             </Container>
         </div>
     );

@@ -6,23 +6,28 @@ import { TaskContext } from "../context/TaskContext";
 const TaskCard = ({ task }) => {
     const { id, name, isFinished } = task;
     const {
-        editedTask,
-        deleteTask,
+        selectedTask,
         finishTask,
-        editTask,
         onEditNameChange,
         saveEditTask,
+        setShowDeleteModal,
+        setSelectedTask,
     } = useContext(TaskContext);
     const [isEditing, setIsEditing] = useState(false);
 
     const onEdit = () => {
         setIsEditing(true);
-        editTask(id);
+        setSelectedTask(task);
     };
 
     const onSave = () => {
         saveEditTask();
         setIsEditing(false);
+    };
+
+    const onDelete = () => {
+        setSelectedTask(task);
+        setShowDeleteModal(true);
     };
 
     return (
@@ -39,11 +44,11 @@ const TaskCard = ({ task }) => {
                     onChange={() => finishTask(id)}
                     className="leading-none"
                 />
-                {isEditing && editedTask ? (
+                {isEditing && selectedTask ? (
                     <input
                         type="text"
                         className="w-4/5 md:w-3/4 lg:w-1/2 appearance-none bg-gray-50 rounded-md py-1 px-3 focus:outline-none"
-                        value={editedTask.name}
+                        value={selectedTask.name}
                         onChange={(e) => onEditNameChange(e.target.value)}
                     />
                 ) : (
@@ -56,7 +61,7 @@ const TaskCard = ({ task }) => {
                     </p>
                 )}
             </div>
-            <div className="flex items-center gap-2 text-lg ml-4">
+            <div className="flex items-center gap-2 text-xl ml-4">
                 {isEditing ? (
                     <button onClick={onSave}>
                         <AiOutlineSave className="text-blue-800" />
@@ -68,8 +73,8 @@ const TaskCard = ({ task }) => {
                                 <AiOutlineEdit className="text-blue-800" />
                             </button>
                         )}
-                        <button onClick={() => deleteTask(task.id)}>
-                            <MdDeleteOutline className="text-red-900" />
+                        <button onClick={onDelete}>
+                            <MdDeleteOutline className="text-red-700" />
                         </button>
                     </React.Fragment>
                 )}
