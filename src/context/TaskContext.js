@@ -19,14 +19,16 @@ const TaskProvider = ({ children }) => {
     }, [tasks]);
 
     const addTask = () => {
-        const newTask = {
-            id: uuidv4(),
-            name: addTaskInput,
-            isFinished: false,
-        };
-        const updatedTasks = [newTask, ...tasks];
-        setTasks(updatedTasks);
-        setAddTaskInput("");
+        if (addTaskInput.length) {
+            const newTask = {
+                id: uuidv4(),
+                name: addTaskInput,
+                isFinished: false,
+            };
+            const updatedTasks = [newTask, ...tasks];
+            setTasks(updatedTasks);
+            setAddTaskInput("");
+        }
     };
 
     const deleteTask = () => {
